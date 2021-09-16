@@ -1,24 +1,34 @@
-import React, { useEffect, useState, Fragment } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 import Picture from './Picture';
+import { PicturesProps, ArtistType, ImagesType } from '../App';
 
-const Pictures: React.FC = () => {
-  const [data, setData] = useState<object[]>([]);
+export interface PictureProps {
+  name: string;
+  year: number;
+  description: string;
+  source: string;
+  artist: ArtistType;
+  images: ImagesType;
+  key?: number;
+}
 
-  useEffect(() => {
-    const data = require('../data.json');
-    setData(data);
-  }, []);
+const Pictures: React.FC<PicturesProps> = (props) => {
+  const picturesData = props.picturesData;
 
   return (
-    <Fragment>
-      <div id='pictures-container'>
-        {data?.map((pictureObject, i) =>
-          // <Picture pictureItem={pictureObject} />
-          console.log(pictureObject)
-        )}
-      </div>
-    </Fragment>
+    <div id='pictures-container'>
+      {picturesData.map((picture, i) => (
+        <Picture
+          key={i}
+          name={picture.name}
+          year={picture.year}
+          description={picture.description}
+          source={picture.source}
+          artist={picture.artist}
+          images={picture.images}
+        />
+      ))}
+    </div>
   );
 };
 
