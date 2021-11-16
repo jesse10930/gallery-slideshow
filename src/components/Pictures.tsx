@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Picture from './Picture';
 import { PicturesProps, ArtistType, ImagesType } from '../App';
 
@@ -12,11 +13,18 @@ export interface PictureProps {
   key?: number;
 }
 
+const PicturesContainer = styled.div`
+  display: grid;
+  grid-gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-auto-flow: dense;
+`;
+
 const Pictures: React.FC<PicturesProps> = (props) => {
   const picturesData = props.picturesData;
 
   return (
-    <div id='pictures-container'>
+    <PicturesContainer id='pictures-container'>
       {picturesData.map((picture, i) => (
         <Picture
           key={i}
@@ -28,7 +36,7 @@ const Pictures: React.FC<PicturesProps> = (props) => {
           images={picture.images}
         />
       ))}
-    </div>
+    </PicturesContainer>
   );
 };
 
