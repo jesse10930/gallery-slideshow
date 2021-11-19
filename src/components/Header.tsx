@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
 import GalleriaLogo from '../assets/shared/logo.svg';
+import { HeaderProps } from '../App';
 
 const StyledHeader = styled.header`
   height: 128px;
@@ -27,19 +27,15 @@ const HeaderRight = styled.button`
   }
 `;
 
-const Header: React.FC = () => {
-  const [slideShowing, setSlideShowing] = useState<boolean>(false);
-
-  const onStartStopClick = () => {
-    const newSlideShowing = !slideShowing;
-    setSlideShowing(newSlideShowing);
-  };
+const Header: React.FC<HeaderProps> = (props) => {
+  const slideShow = props.slideShow;
+  const onStartStopClick = props.onStartStopClick;
 
   return (
     <StyledHeader id='header'>
       <img src={GalleriaLogo} alt='Galleria Logo' />
       <HeaderRight id='header-right' onClick={onStartStopClick}>
-        {slideShowing ? (
+        {slideShow ? (
           <span id='end-slideshow'>STOP SLIDESHOW</span>
         ) : (
           <span id='start-slideshow'>START SLIDESHOW</span>
