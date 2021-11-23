@@ -11,6 +11,7 @@ export type PictureType = {
   source: string;
   artist: ArtistType;
   images: ImagesType;
+  id: number;
   key?: number;
 };
 
@@ -43,6 +44,7 @@ export type HeroType = {
 
 export interface PicturesProps {
   picturesData: PictureType[];
+  onStartStopClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export interface HeaderProps {
@@ -60,10 +62,16 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const data = require('./data.json');
-    setData(data);
+    const newData = data.map((pictureObj: any, i: number) => {
+      pictureObj.id = i;
+      return pictureObj;
+    });
+
+    setData(newData);
   }, []);
 
-  const onStartStopClick = () => {
+  const onStartStopClick = (e: any) => {
+    console.log(e.target.id);
     const newSlideShowStatus = !slideShow;
     setSlideShow(newSlideShowStatus);
   };
@@ -72,7 +80,7 @@ const App: React.FC = () => {
     <div className='App'>
       <Header slideShow={slideShow} onStartStopClick={onStartStopClick} />
       {!slideShow ? (
-        <Pictures picturesData={data} />
+        <Pictures picturesData={data} onStartStopClick={onStartStopClick} />
       ) : (
         <Details picturesData={data} />
       )}

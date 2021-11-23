@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { PictureProps } from './Pictures';
 
-const PictureItem = styled.div`
+const PictureItem = styled.button`
   position: relative;
   text-align: center;
   height: fit-content;
   margin: 10px 0;
   transition: 0.5s ease;
+  border: none;
+  outline: none;
 
   &:hover {
     opacity: 0.7;
@@ -58,11 +60,11 @@ const Author = styled.p`
 `;
 
 const Picture: React.FC<PictureProps> = (props) => {
-  const { name, artist, images } = props;
+  const { name, artist, images, id, onStartStopClick } = props;
 
   return (
-    <PictureItem>
-      <img src={images.thumbnail} alt='' />
+    <PictureItem onClick={onStartStopClick}>
+      <img src={images.thumbnail} alt='' id={'image-' + id} />
       <Overlay></Overlay>
       <PictureTitle>
         <Title>{name}</Title>

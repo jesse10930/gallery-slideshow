@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { PicturesProps, PictureType } from '../App';
 
 const DetailsContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
 `;
 
 const Detail = styled.div`
-  position: absolute;
   width: 1360px;
   height: 524px;
 `;
@@ -67,12 +67,13 @@ const DetailYear = styled.div`
 
 const DetailTitleContainer = styled.div`
   background: white;
-  height: 200px;
-  width: 300px;
+  height: fit-content;
+  width: 400px;
   position: absolute;
   top: 10px;
   left: 325px;
   padding-left: 30px;
+  padding-bottom: 30px;
 `;
 
 const DetailTitle = styled.div`
@@ -161,16 +162,100 @@ const FooterRight = styled.div`
   justify-content: space-between;
 `;
 
+const ArrowBtn = styled.button`
+  outline: none;
+  border: none;
+  background-color: white;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ViewImageModal = styled.div`
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.8);
+`;
+
+const ViewImageDiv = styled.div`
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+const ViewImageImage = styled.img``;
+
+const ViewImageClose = styled.button`
+  background: rgba(0, 0, 0, 0.8);
+  border: none;
+  color: white;
+  font-family: 'Libre Baskerville', serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 3px;
+
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 const Details: React.FC<PicturesProps> = (props) => {
+  console.log('hey');
+
   const picturesData = props.picturesData;
 
   const [current, setCurrent] = useState<PictureType>(picturesData[0]);
+
+  const onNextClick = () => {
+    let max = picturesData.length - 1;
+    let curIndex = picturesData
+      .map((picture) => picture.name)
+      .indexOf(current.name);
+
+    curIndex === max
+      ? setCurrent(picturesData[0])
+      : setCurrent(picturesData[curIndex + 1]);
+  };
+
+  const onPrevClick = () => {
+    let max = picturesData.length - 1;
+    let curIndex = picturesData
+      .map((picture) => picture.name)
+      .indexOf(current.name);
+
+    curIndex === 0
+      ? setCurrent(picturesData[max])
+      : setCurrent(picturesData[curIndex - 1]);
+  };
+
+  const onViewImageClick = () => {
+    let divElement = document.getElementById('view-image-modal');
+    divElement ? (divElement.style.display = 'flex') : console.log('nah');
+  };
+
+  const onCloseClick = () => {
+    let divElement = document.getElementById('view-image-modal');
+    divElement ? (divElement.style.display = 'none') : console.log('nah');
+  };
 
   return (
     <DetailsContainer id='details-container'>
       <Detail>
         <DetailImage src={current.images.hero.large} alt=''></DetailImage>
-        <DetailViewImage>
+        <DetailViewImage onClick={onViewImageClick}>
           <img
             src={require('../assets/shared/icon-view-image.svg').default}
             alt=''
@@ -184,7 +269,9 @@ const Details: React.FC<PicturesProps> = (props) => {
           <DetailArtistName>{current.artist.name}</DetailArtistName>
         </DetailTitleContainer>
         <DetailDescription>{current.description}</DetailDescription>
-        <DetailSource href={current.source}>GO TO SOURCE</DetailSource>
+        <DetailSource href={current.source} target='_blank'>
+          GO TO SOURCE
+        </DetailSource>
       </Detail>
       <Footer>
         <div>
@@ -192,16 +279,28 @@ const Details: React.FC<PicturesProps> = (props) => {
           <FooterArtist>{current.artist.name}</FooterArtist>
         </div>
         <FooterRight>
-          <img
-            src={require('../assets/shared/icon-back-button.svg').default}
-            alt='icon-back-button'
-          />
-          <img
-            src={require('../assets/shared/icon-next-button.svg').default}
-            alt='icon-next-button'
-          />
+          <ArrowBtn onClick={onPrevClick}>
+            {' '}
+            <img
+              src={require('../assets/shared/icon-back-button.svg').default}
+              alt='icon-back-button'
+            />
+          </ArrowBtn>
+          <ArrowBtn onClick={onNextClick}>
+            {' '}
+            <img
+              src={require('../assets/shared/icon-next-button.svg').default}
+              alt='icon-next-button'
+            />
+          </ArrowBtn>
         </FooterRight>
       </Footer>
+      <ViewImageModal id='view-image-modal'>
+        <ViewImageDiv>
+          <ViewImageClose onClick={onCloseClick}>CLOSE</ViewImageClose>
+          <ViewImageImage src={current.images.gallery}></ViewImageImage>
+        </ViewImageDiv>
+      </ViewImageModal>
     </DetailsContainer>
   );
 };

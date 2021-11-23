@@ -7,6 +7,8 @@ export interface PictureProps {
   name: string;
   artist: ArtistType;
   images: ImagesType;
+  id: number;
+  onStartStopClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   key?: number;
 }
 
@@ -43,6 +45,7 @@ const PicturesColumnFour = styled.div`
 
 const Pictures: React.FC<PicturesProps> = (props) => {
   const picturesData = props.picturesData;
+  const onStartStopClick = props.onStartStopClick;
 
   return (
     <PicturesContainer id='pictures-container'>
@@ -52,9 +55,11 @@ const Pictures: React.FC<PicturesProps> = (props) => {
             i <= 3 && (
               <Picture
                 key={i}
+                id={picture.id}
                 name={picture.name}
                 artist={picture.artist}
                 images={picture.images}
+                onStartStopClick={onStartStopClick}
               />
             )
         )}
@@ -66,9 +71,11 @@ const Pictures: React.FC<PicturesProps> = (props) => {
             i <= 7 && (
               <Picture
                 key={i}
+                id={picture.id}
                 name={picture.name}
                 artist={picture.artist}
                 images={picture.images}
+                onStartStopClick={onStartStopClick}
               />
             )
         )}
@@ -80,9 +87,11 @@ const Pictures: React.FC<PicturesProps> = (props) => {
             i <= 10 && (
               <Picture
                 key={i}
+                id={picture.id}
                 name={picture.name}
                 artist={picture.artist}
                 images={picture.images}
+                onStartStopClick={onStartStopClick}
               />
             )
         )}
@@ -93,9 +102,11 @@ const Pictures: React.FC<PicturesProps> = (props) => {
             i >= 11 && (
               <Picture
                 key={i}
+                id={picture.id}
                 name={picture.name}
                 artist={picture.artist}
                 images={picture.images}
+                onStartStopClick={onStartStopClick}
               />
             )
         )}
