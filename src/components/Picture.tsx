@@ -15,6 +15,10 @@ const PictureItem = styled.button`
     opacity: 0.7;
     cursor: pointer;
   }
+
+  & > * {
+    pointer-events: none;
+  }
 `;
 
 const Overlay = styled.div`
@@ -39,7 +43,7 @@ const PictureTitle = styled.div`
 `;
 
 const Title = styled.p`
-  color: #ffffff;
+  color: var(--white);
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: bold;
@@ -48,7 +52,7 @@ const Title = styled.p`
 `;
 
 const Author = styled.p`
-  color: #ffffff;
+  color: var(--white);
   margin-top: 5px;
   font-family: 'Libre Baskerville', serif;
   font-style: normal;

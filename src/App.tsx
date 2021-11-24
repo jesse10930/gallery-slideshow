@@ -15,17 +15,6 @@ export type PictureType = {
   key?: number;
 };
 
-// type DetailType = {
-//   name: string;
-//   year: number;
-//   description: string;
-//   source: string;
-//   artist: ArtistType;
-//   images: ImagesType;
-//   gallery: string;
-//   key?: number;
-// };
-
 export type ArtistType = {
   image: string;
   name: string;
@@ -45,6 +34,7 @@ export type HeroType = {
 export interface PicturesProps {
   picturesData: PictureType[];
   onStartStopClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  imageID: number | undefined;
 }
 
 export interface HeaderProps {
@@ -52,13 +42,10 @@ export interface HeaderProps {
   onStartStopClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-// export interface DetailsProps {
-//   detailsData: DetailType[];
-// }
-
 const App: React.FC = () => {
   const [data, setData] = useState<PictureType[]>([]);
   const [slideShow, setSlideShow] = useState<boolean>(false);
+  const [imageID, setImageID] = useState<number | undefined>();
 
   useEffect(() => {
     const data = require('./data.json');
@@ -71,7 +58,10 @@ const App: React.FC = () => {
   }, []);
 
   const onStartStopClick = (e: any) => {
-    console.log(e.target.id);
+    let elemID = e.target.childNodes[0].id;
+    let imageID = elemID ? Number(elemID.substr(elemID.indexOf('-') + 1)) : NaN;
+    setImageID(imageID);
+
     const newSlideShowStatus = !slideShow;
     setSlideShow(newSlideShowStatus);
   };
@@ -80,9 +70,13 @@ const App: React.FC = () => {
     <div className='App'>
       <Header slideShow={slideShow} onStartStopClick={onStartStopClick} />
       {!slideShow ? (
-        <Pictures picturesData={data} onStartStopClick={onStartStopClick} />
+        <Pictures
+          picturesData={data}
+          onStartStopClick={onStartStopClick}
+          imageID={imageID}
+        />
       ) : (
-        <Details picturesData={data} />
+        <Details picturesData={data} imageID={imageID} />
       )}
     </div>
   );

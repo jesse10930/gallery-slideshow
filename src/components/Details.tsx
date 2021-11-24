@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { PicturesProps, PictureType } from '../App';
 
 const DetailsContainer = styled.div`
+  height: calc(100vh - 224px);
   position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
 const Detail = styled.div`
+  position: relative;
   width: 1360px;
   height: 524px;
 `;
@@ -30,9 +33,9 @@ const DetailViewImage = styled.button`
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background: black;
+  background: var(--black);
   border: none;
-  color: white;
+  color: var(--white);
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: bold;
@@ -47,7 +50,7 @@ const DetailViewImage = styled.button`
 
 const DetailArtistImg = styled.img`
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   left: 395px;
 `;
 
@@ -62,11 +65,11 @@ const DetailYear = styled.div`
   font-size: 200px;
   line-height: 150px;
   text-align: right;
-  color: #f3f3f3;
+  color: var(--lt-grey);
 `;
 
 const DetailTitleContainer = styled.div`
-  background: white;
+  background: var(--white);
   height: fit-content;
   width: 400px;
   position: absolute;
@@ -76,25 +79,25 @@ const DetailTitleContainer = styled.div`
   padding-bottom: 30px;
 `;
 
-const DetailTitle = styled.div`
+const DetailTitle = styled.h1`
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: bold;
   font-size: 56px;
   line-height: 64px;
-  color: #000000;
+  color: var(--black);
 `;
 
-const DetailArtistName = styled.div`
+const DetailArtistName = styled.p`
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
   line-height: 19px;
-  color: #7d7d7d;
+  color: var(--dk-grey);
 `;
 
-const DetailDescription = styled.div`
+const DetailDescription = styled.p`
   position: absolute;
   height: 364px;
   left: 65.07%;
@@ -105,7 +108,7 @@ const DetailDescription = styled.div`
   font-weight: bold;
   font-size: 14px;
   line-height: 28px;
-  color: #7d7d7d;
+  color: var(--dk-grey);
 `;
 
 const DetailSource = styled.a`
@@ -122,7 +125,7 @@ const DetailSource = styled.a`
   line-height: 11px;
   letter-spacing: 1.92857px;
   text-decoration-line: underline;
-  color: #7d7d7d;
+  color: var(--dk-grey);
 `;
 
 const Footer = styled.footer`
@@ -134,15 +137,16 @@ const Footer = styled.footer`
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid var(--grey);
+  background: var(--white);
 `;
 
-const FooterTitle = styled.p`
+const FooterTitle = styled.h3`
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 22px;
-  color: #000000;
+  color: var(--black);
 `;
 
 const FooterArtist = styled.p`
@@ -151,7 +155,7 @@ const FooterArtist = styled.p`
   font-weight: normal;
   font-size: 13px;
   line-height: 16px;
-  color: #000000;
+  color: var(--black);
   mix-blend-mode: normal;
   opacity: 0.75;
 `;
@@ -165,10 +169,14 @@ const FooterRight = styled.div`
 const ArrowBtn = styled.button`
   outline: none;
   border: none;
-  background-color: white;
+  background-color: var(--white);
 
   &:hover {
     cursor: pointer;
+  }
+
+  & > * {
+    pointer-events: none;
   }
 `;
 
@@ -213,11 +221,25 @@ const ViewImageClose = styled.button`
 `;
 
 const Details: React.FC<PicturesProps> = (props) => {
-  console.log('hey');
-
+  const imageID = props.imageID;
   const picturesData = props.picturesData;
+  const [current, setCurrent] = useState<PictureType>(
+    imageID ? picturesData[imageID] : picturesData[0]
+  );
 
-  const [current, setCurrent] = useState<PictureType>(picturesData[0]);
+  useEffect(() => {
+    let prevBtnElem = document.getElementById('prev-btn') as HTMLButtonElement;
+    let nextBtnElem = document.getElementById('next-btn') as HTMLButtonElement;
+    if (!imageID || imageID === 0) {
+      prevBtnElem!.disabled = true;
+      prevBtnElem.style.cursor = 'not-allowed';
+    }
+
+    if (imageID === 14) {
+      nextBtnElem!.disabled = true;
+      nextBtnElem.style.cursor = 'not-allowed';
+    }
+  }, []);
 
   const onNextClick = () => {
     let max = picturesData.length - 1;
@@ -225,8 +247,10 @@ const Details: React.FC<PicturesProps> = (props) => {
       .map((picture) => picture.name)
       .indexOf(current.name);
 
-    curIndex === max
-      ? setCurrent(picturesData[0])
+    curIndex === 0
+      ? enableButton(curIndex, 'prev-btn', 1)
+      : curIndex === max - 1
+      ? disableButton(curIndex, 'next-btn', 1)
       : setCurrent(picturesData[curIndex + 1]);
   };
 
@@ -236,9 +260,25 @@ const Details: React.FC<PicturesProps> = (props) => {
       .map((picture) => picture.name)
       .indexOf(current.name);
 
-    curIndex === 0
-      ? setCurrent(picturesData[max])
+    curIndex === 1
+      ? disableButton(curIndex, 'prev-btn', -1)
+      : curIndex === max
+      ? enableButton(curIndex, 'next-btn', -1)
       : setCurrent(picturesData[curIndex - 1]);
+  };
+
+  const disableButton = (curIndex: number, input: string, change: number) => {
+    let buttonElem = document.getElementById(input) as HTMLButtonElement;
+    buttonElem!.disabled = true;
+    buttonElem!.style.cursor = 'not-allowed';
+    setCurrent(picturesData[curIndex + change]);
+  };
+
+  const enableButton = (curIndex: number, input: string, change: number) => {
+    let buttonElem = document.getElementById(input) as HTMLButtonElement;
+    buttonElem!.disabled = false;
+    buttonElem!.style.cursor = 'pointer';
+    setCurrent(picturesData[curIndex + change]);
   };
 
   const onViewImageClick = () => {
@@ -279,18 +319,22 @@ const Details: React.FC<PicturesProps> = (props) => {
           <FooterArtist>{current.artist.name}</FooterArtist>
         </div>
         <FooterRight>
-          <ArrowBtn onClick={onPrevClick}>
+          <ArrowBtn id='prev-btn' onClick={onPrevClick}>
             {' '}
             <img
               src={require('../assets/shared/icon-back-button.svg').default}
               alt='icon-back-button'
+              style={{ opacity: current.id === 0 ? 0.5 : 1 }}
             />
           </ArrowBtn>
-          <ArrowBtn onClick={onNextClick}>
+          <ArrowBtn id='next-btn' onClick={onNextClick}>
             {' '}
             <img
               src={require('../assets/shared/icon-next-button.svg').default}
               alt='icon-next-button'
+              style={{
+                opacity: current.id === picturesData.length - 1 ? 0.5 : 1,
+              }}
             />
           </ArrowBtn>
         </FooterRight>
