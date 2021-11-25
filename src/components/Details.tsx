@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import { PicturesProps, PictureType } from '../App';
 
 const DetailsContainer = styled.div`
-  height: calc(100vh - 224px);
+  height: calc(100% - 130px);
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const Detail = styled.div`
@@ -25,9 +25,9 @@ const DetailImage = styled.img`
 `;
 
 const DetailViewImage = styled.button`
-  position: absolute;
-  left: 30px;
-  bottom: 100px;
+  position: relative;
+  left: 10px;
+  top: 410px;
   height: 40px;
   width: 152px;
   display: flex;
@@ -50,7 +50,7 @@ const DetailViewImage = styled.button`
 
 const DetailArtistImg = styled.img`
   position: absolute;
-  bottom: 10px;
+  top: 390px;
   left: 395px;
 `;
 
@@ -102,7 +102,8 @@ const DetailDescription = styled.p`
   height: 364px;
   left: 65.07%;
   right: 9.19%;
-  top: calc(50% - 364px / 2 - 15px);
+  /* top: calc(50% - 364px / 2 - 15px); */
+  top: 60px;
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: bold;
@@ -117,7 +118,8 @@ const DetailSource = styled.a`
   width: 200px;
   left: 65.07%;
   right: 27.43%;
-  top: calc(50% - 11px / 2 + 203.5px);
+  /* top: calc(50% - 11px / 2 + 203.5px); */
+  top: 460px;
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
   font-weight: bold;
@@ -129,8 +131,9 @@ const DetailSource = styled.a`
 `;
 
 const Footer = styled.footer`
-  position: fixed;
-  bottom: 0;
+  /* position: absolute; */
+  /* top: 524px; */
+  position: relative;
   width: 1360px;
   height: 96px;
   display: flex;
@@ -220,6 +223,13 @@ const ViewImageClose = styled.button`
   }
 `;
 
+const ProgressBar = styled.div`
+  height: 2px;
+  position: absolute;
+  top: -1px;
+  background: var(--black);
+`;
+
 const Details: React.FC<PicturesProps> = (props) => {
   const imageID = props.imageID;
   const picturesData = props.picturesData;
@@ -235,7 +245,7 @@ const Details: React.FC<PicturesProps> = (props) => {
       prevBtnElem.style.cursor = 'not-allowed';
     }
 
-    if (imageID === 14) {
+    if (imageID === picturesData.length - 1) {
       nextBtnElem!.disabled = true;
       nextBtnElem.style.cursor = 'not-allowed';
     }
@@ -338,6 +348,11 @@ const Details: React.FC<PicturesProps> = (props) => {
             />
           </ArrowBtn>
         </FooterRight>
+        <ProgressBar
+          style={{
+            width: (1360 / picturesData.length) * (current.id + 1) + 'px',
+          }}
+        ></ProgressBar>
       </Footer>
       <ViewImageModal id='view-image-modal'>
         <ViewImageDiv>
