@@ -8,12 +8,22 @@ const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+
+  @media (max-width: 800px) {
+    height: calc(100vh - 129px);
+    justify-content: space-between;
+  }
 `;
 
 const Detail = styled.div`
   position: relative;
   width: 1360px;
   height: 524px;
+
+  @media (max-width: 800px) {
+    height: 100%;
+    width: 100%;
+  }
 `;
 
 const DetailImage = styled.img`
@@ -22,6 +32,10 @@ const DetailImage = styled.img`
   left: 0;
   height: 450px;
   width: 375px;
+
+  @media (max-width: 800px) {
+    width: 400px;
+  }
 `;
 
 const DetailViewImage = styled.button`
@@ -48,10 +62,33 @@ const DetailViewImage = styled.button`
   }
 `;
 
+const DetailTitleContainer = styled.div`
+  background: var(--white);
+  height: fit-content;
+  width: 400px;
+  position: absolute;
+  top: 10px;
+  left: 325px;
+  padding-left: 30px;
+  padding-bottom: 30px;
+
+  @media (max-width: 800px) {
+    left: 225px;
+    padding-left: 80px;
+    padding-bottom: 80px;
+  }
+`;
+
 const DetailArtistImg = styled.img`
   position: absolute;
   top: 390px;
   left: 395px;
+
+  @media (max-width: 800px) {
+    position: absolute;
+    top: 330px;
+    left: 440px;
+  }
 `;
 
 const DetailYear = styled.div`
@@ -66,17 +103,11 @@ const DetailYear = styled.div`
   line-height: 150px;
   text-align: right;
   color: var(--lt-grey);
-`;
 
-const DetailTitleContainer = styled.div`
-  background: var(--white);
-  height: fit-content;
-  width: 400px;
-  position: absolute;
-  top: 10px;
-  left: 325px;
-  padding-left: 30px;
-  padding-bottom: 30px;
+  @media (max-width: 800px) {
+    right: 250px;
+    top: 500px;
+  }
 `;
 
 const DetailTitle = styled.h1`
@@ -110,6 +141,12 @@ const DetailDescription = styled.p`
   font-size: 14px;
   line-height: 28px;
   color: var(--dk-grey);
+
+  @media (max-width: 800px) {
+    width: 450px;
+    top: 500px;
+    left: 15%;
+  }
 `;
 
 const DetailSource = styled.a`
@@ -128,6 +165,11 @@ const DetailSource = styled.a`
   letter-spacing: 1.92857px;
   text-decoration-line: underline;
   color: var(--dk-grey);
+
+  @media (max-width: 800px) {
+    top: 785px;
+    left: 15%;
+  }
 `;
 
 const Footer = styled.footer`
@@ -141,6 +183,10 @@ const Footer = styled.footer`
   align-items: center;
   border-top: 1px solid var(--grey);
   background: var(--white);
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 const FooterTitle = styled.h3`
@@ -303,32 +349,44 @@ const Details: React.FC<PicturesProps> = (props) => {
 
   return (
     <DetailsContainer id='details-container'>
-      <Detail>
-        <DetailImage src={current.images.hero.large} alt=''></DetailImage>
-        <DetailViewImage onClick={onViewImageClick}>
+      <Detail id='detail'>
+        <DetailImage
+          id='detail-image'
+          src={current.images.hero.large}
+          alt=''
+        ></DetailImage>
+        <DetailViewImage id='detail-view-image' onClick={onViewImageClick}>
           <img
             src={require('../assets/shared/icon-view-image.svg').default}
             alt=''
           />
           VIEW IMAGE
         </DetailViewImage>
-        <DetailArtistImg src={current.artist.image} alt=''></DetailArtistImg>
-        <DetailYear>{current.year}</DetailYear>
-        <DetailTitleContainer>
-          <DetailTitle>{current.name}</DetailTitle>
-          <DetailArtistName>{current.artist.name}</DetailArtistName>
+        <DetailArtistImg
+          id='detail-artist-img'
+          src={current.artist.image}
+          alt=''
+        ></DetailArtistImg>
+        <DetailYear id='detail-year'>{current.year}</DetailYear>
+        <DetailTitleContainer id='detail-title-container'>
+          <DetailTitle id='detail-title'>{current.name}</DetailTitle>
+          <DetailArtistName id='detail-artist-name'>
+            {current.artist.name}
+          </DetailArtistName>
         </DetailTitleContainer>
-        <DetailDescription>{current.description}</DetailDescription>
-        <DetailSource href={current.source} target='_blank'>
+        <DetailDescription id='detail-description'>
+          {current.description}
+        </DetailDescription>
+        <DetailSource id='detail-source' href={current.source} target='_blank'>
           GO TO SOURCE
         </DetailSource>
       </Detail>
-      <Footer>
+      <Footer id='footer'>
         <div>
-          <FooterTitle>{current.name}</FooterTitle>
-          <FooterArtist>{current.artist.name}</FooterArtist>
+          <FooterTitle id='footer-title'>{current.name}</FooterTitle>
+          <FooterArtist id='footer-artist'>{current.artist.name}</FooterArtist>
         </div>
-        <FooterRight>
+        <FooterRight id='footer-right'>
           <ArrowBtn id='prev-btn' onClick={onPrevClick}>
             {' '}
             <img
@@ -349,15 +407,22 @@ const Details: React.FC<PicturesProps> = (props) => {
           </ArrowBtn>
         </FooterRight>
         <ProgressBar
+          id='progress-bar'
           style={{
-            width: (1360 / picturesData.length) * (current.id + 1) + 'px',
+            // width: (1360 / picturesData.length) * (current.id + 1) + 'px',
+            width: (729 / picturesData.length) * (current.id + 1) + 'px',
           }}
         ></ProgressBar>
       </Footer>
       <ViewImageModal id='view-image-modal'>
-        <ViewImageDiv>
-          <ViewImageClose onClick={onCloseClick}>CLOSE</ViewImageClose>
-          <ViewImageImage src={current.images.gallery}></ViewImageImage>
+        <ViewImageDiv id='view-image-div'>
+          <ViewImageClose id='view-image-close' onClick={onCloseClick}>
+            CLOSE
+          </ViewImageClose>
+          <ViewImageImage
+            id='view-image-image'
+            src={current.images.hero.small}
+          ></ViewImageImage>
         </ViewImageDiv>
       </ViewImageModal>
     </DetailsContainer>

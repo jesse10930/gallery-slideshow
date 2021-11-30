@@ -18,3 +18,23 @@ body {
 html {
   overflow-y: scroll;
 }
+
+@media (max-width: 800px) {
+  html,
+  body {
+    font-family: 'Libre Baskerville', serif;
+    max-width: 95vw;
+    min-width: 95vw;
+    margin: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  html,
+  body {
+    font-family: 'Libre Baskerville', serif;
+    max-width: 95vw;
+    min-width: 95vw;
+    margin: auto;
+  }
+}
