@@ -36,6 +36,12 @@ const DetailImage = styled.img`
   @media (max-width: 800px) {
     width: 400px;
   }
+
+  @media (max-width: 500px) {
+    width: 90%;
+    height: 280px;
+    left: 5%;
+  }
 `;
 
 const DetailViewImage = styled.button`
@@ -60,6 +66,11 @@ const DetailViewImage = styled.button`
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 800px) {
+    top: 20px;
+    left: 8%;
+  }
 `;
 
 const DetailTitleContainer = styled.div`
@@ -77,6 +88,14 @@ const DetailTitleContainer = styled.div`
     padding-left: 80px;
     padding-bottom: 80px;
   }
+
+  @media (max-width: 500px) {
+    width: 232px;
+    height: 72px;
+    padding: 24px;
+    left: 4%;
+    top: 230px;
+  }
 `;
 
 const DetailArtistImg = styled.img`
@@ -88,6 +107,13 @@ const DetailArtistImg = styled.img`
     position: absolute;
     top: 330px;
     left: 440px;
+  }
+
+  @media (max-width: 500px) {
+    top: 350px;
+    left: 10%;
+    height: 64px;
+    width: 64px;
   }
 `;
 
@@ -108,6 +134,13 @@ const DetailYear = styled.div`
     right: 250px;
     top: 500px;
   }
+
+  @media (max-width: 500px) {
+    font-size: 100px;
+    line-height: 100px;
+    top: 382px;
+    left: 110px;
+  }
 `;
 
 const DetailTitle = styled.h1`
@@ -117,6 +150,11 @@ const DetailTitle = styled.h1`
   font-size: 56px;
   line-height: 64px;
   color: var(--black);
+
+  @media (max-width: 500px) {
+    font-size: 24px;
+    line-height: 29px;
+  }
 `;
 
 const DetailArtistName = styled.p`
@@ -147,6 +185,12 @@ const DetailDescription = styled.p`
     top: 500px;
     left: 15%;
   }
+
+  @media (max-width: 500px) {
+    width: 327px;
+    top: 475px;
+    left: 5%;
+  }
 `;
 
 const DetailSource = styled.a`
@@ -170,6 +214,11 @@ const DetailSource = styled.a`
     top: 785px;
     left: 15%;
   }
+
+  @media (max-width: 800px) {
+    top: 885px;
+    left: 5%;
+  }
 `;
 
 const Footer = styled.footer`
@@ -186,6 +235,10 @@ const Footer = styled.footer`
 
   @media (max-width: 800px) {
     width: 100%;
+  }
+
+  @media (max-width: 500px) {
+    top: calc(100vh - 200px);
   }
 `;
 
@@ -249,9 +302,19 @@ const ViewImageDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
+  @media (max-width: 500px) {
+    width: 330px;
+    height: 315px;
+  }
 `;
 
-const ViewImageImage = styled.img``;
+const ViewImageImage = styled.img`
+  @media (max-width: 500px) {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 const ViewImageClose = styled.button`
   background: rgba(0, 0, 0, 0.8);
@@ -410,7 +473,8 @@ const Details: React.FC<PicturesProps> = (props) => {
           id='progress-bar'
           style={{
             // width: (1360 / picturesData.length) * (current.id + 1) + 'px',
-            width: (729 / picturesData.length) * (current.id + 1) + 'px',
+            // width: (729 / picturesData.length) * (current.id + 1) + 'px',
+            width: (356 / picturesData.length) * (current.id + 1) + 'px',
           }}
         ></ProgressBar>
       </Footer>
@@ -421,7 +485,7 @@ const Details: React.FC<PicturesProps> = (props) => {
           </ViewImageClose>
           <ViewImageImage
             id='view-image-image'
-            src={current.images.hero.small}
+            src={current.images.hero.large}
           ></ViewImageImage>
         </ViewImageDiv>
       </ViewImageModal>

@@ -10,8 +10,7 @@
 html,
 body {
   font-family: 'Libre Baskerville', serif;
-  max-width: 1360px;
-  min-width: 1360px;
+  width: 1360px;
   margin: auto;
 }
 
@@ -23,8 +22,7 @@ html {
   html,
   body {
     font-family: 'Libre Baskerville', serif;
-    max-width: 95vw;
-    min-width: 95vw;
+    width: 95vw;
     margin: auto;
   }
 }
@@ -33,8 +31,7 @@ html {
   html,
   body {
     font-family: 'Libre Baskerville', serif;
-    max-width: 95vw;
-    min-width: 95vw;
+    width: 95vw;
     margin: auto;
   }
 }
