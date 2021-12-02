@@ -69,7 +69,7 @@ const DetailViewImage = styled.button`
 
   @media (max-width: 800px) {
     top: 20px;
-    left: 8%;
+    left: 20px;
   }
 `;
 
@@ -215,7 +215,7 @@ const DetailSource = styled.a`
     left: 15%;
   }
 
-  @media (max-width: 800px) {
+  @media (max-width: 500px) {
     top: 885px;
     left: 5%;
   }
@@ -235,6 +235,7 @@ const Footer = styled.footer`
 
   @media (max-width: 800px) {
     width: 100%;
+    top: calc(100vh - 1030px);
   }
 
   @media (max-width: 500px) {
@@ -342,6 +343,7 @@ const ProgressBar = styled.div`
 const Details: React.FC<PicturesProps> = (props) => {
   const imageID = props.imageID;
   const picturesData = props.picturesData;
+  const windowWidth = window.innerWidth;
   const [current, setCurrent] = useState<PictureType>(
     imageID ? picturesData[imageID] : picturesData[0]
   );
@@ -472,9 +474,12 @@ const Details: React.FC<PicturesProps> = (props) => {
         <ProgressBar
           id='progress-bar'
           style={{
-            // width: (1360 / picturesData.length) * (current.id + 1) + 'px',
-            // width: (729 / picturesData.length) * (current.id + 1) + 'px',
-            width: (356 / picturesData.length) * (current.id + 1) + 'px',
+            width:
+              windowWidth > 800
+                ? (1360 / picturesData.length) * (current.id + 1) + 'px'
+                : windowWidth <= 500
+                ? (356 / picturesData.length) * (current.id + 1) + 'px'
+                : (729 / picturesData.length) * (current.id + 1) + 'px',
           }}
         ></ProgressBar>
       </Footer>
@@ -485,7 +490,12 @@ const Details: React.FC<PicturesProps> = (props) => {
           </ViewImageClose>
           <ViewImageImage
             id='view-image-image'
-            src={current.images.hero.large}
+            // src={
+            //   window.innerWidth <= 800
+            //     ? current.images.hero.small
+            //     : current.images.hero.large
+            // }
+            src={current.images.hero.small}
           ></ViewImageImage>
         </ViewImageDiv>
       </ViewImageModal>

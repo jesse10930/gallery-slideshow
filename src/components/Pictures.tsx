@@ -54,20 +54,22 @@ const Pictures: React.FC<PicturesProps> = (props) => {
   return (
     <PicturesContainer id='pictures-container'>
       <PicturesColumnOne id='picture-col-one'>
-        {picturesData.map((picture, i) => (
-          // i <= 3 && (
-          // i <= 7 && (
-          <Picture
-            key={i}
-            id={picture.id}
-            name={picture.name}
-            artist={picture.artist}
-            images={picture.images}
-            onStartStopClick={onStartStopClick}
-          />
-        ))}
+        {picturesData.map(
+          (picture, i) =>
+            // i <= 3 && (
+            i <= 7 && (
+              <Picture
+                key={i}
+                id={picture.id}
+                name={picture.name}
+                artist={picture.artist}
+                images={picture.images}
+                onStartStopClick={onStartStopClick}
+              />
+            )
+        )}
       </PicturesColumnOne>
-      {/* <PicturesColumnTwo id='picture-col-two'>
+      <PicturesColumnTwo id='picture-col-two'>
         {picturesData.map(
           (picture, i) =>
             // i >= 4 &&
@@ -83,7 +85,7 @@ const Pictures: React.FC<PicturesProps> = (props) => {
               />
             )
         )}
-      </PicturesColumnTwo> */}
+      </PicturesColumnTwo>
       {/* <PicturesColumnThree id='picture-col-three'>
         {picturesData.map(
           (picture, i) =>
