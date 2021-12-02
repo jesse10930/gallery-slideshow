@@ -6,7 +6,6 @@ const PictureItem = styled.button`
   position: relative;
   text-align: center;
   height: fit-content;
-  margin: 10px 0;
   transition: 0.5s ease;
   border: none;
   outline: none;

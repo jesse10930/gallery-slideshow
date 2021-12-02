@@ -10,8 +10,12 @@ const DetailsContainer = styled.div`
   justify-content: space-evenly;
 
   @media (max-width: 800px) {
-    height: calc(100vh - 129px);
+    /* height: calc(100vh - 129px); */
     justify-content: space-between;
+  }
+
+  @media (max-width: 500px) {
+    height: calc(100vh - 129px);
   }
 `;
 
@@ -171,7 +175,6 @@ const DetailDescription = styled.p`
   height: 364px;
   left: 65.07%;
   right: 9.19%;
-  /* top: calc(50% - 364px / 2 - 15px); */
   top: 60px;
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
@@ -199,7 +202,6 @@ const DetailSource = styled.a`
   width: 200px;
   left: 65.07%;
   right: 27.43%;
-  /* top: calc(50% - 11px / 2 + 203.5px); */
   top: 460px;
   font-family: 'Libre Baskerville', serif;
   font-style: normal;
@@ -222,8 +224,6 @@ const DetailSource = styled.a`
 `;
 
 const Footer = styled.footer`
-  /* position: absolute; */
-  /* top: 524px; */
   position: relative;
   width: 1360px;
   height: 96px;
@@ -235,7 +235,7 @@ const Footer = styled.footer`
 
   @media (max-width: 800px) {
     width: 100%;
-    top: calc(100vh - 1030px);
+    top: 758px;
   }
 
   @media (max-width: 500px) {
@@ -348,6 +348,13 @@ const Details: React.FC<PicturesProps> = (props) => {
     imageID ? picturesData[imageID] : picturesData[0]
   );
 
+  console.log(
+    Math.max(
+      document.documentElement.clientHeight || 0,
+      window.innerHeight || 0
+    )
+  );
+
   useEffect(() => {
     let prevBtnElem = document.getElementById('prev-btn') as HTMLButtonElement;
     let nextBtnElem = document.getElementById('next-btn') as HTMLButtonElement;
@@ -360,6 +367,7 @@ const Details: React.FC<PicturesProps> = (props) => {
       nextBtnElem!.disabled = true;
       nextBtnElem.style.cursor = 'not-allowed';
     }
+    // eslint-disable-next-line
   }, []);
 
   const onNextClick = () => {
