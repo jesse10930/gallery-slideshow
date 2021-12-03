@@ -63,15 +63,16 @@ const Author = styled.p`
 `;
 
 const Picture: React.FC<PictureProps> = (props) => {
+  // Destructure props
   const { name, artist, images, id, onStartStopClick } = props;
 
   return (
-    <PictureItem onClick={onStartStopClick}>
+    <PictureItem id='picture-item' onClick={onStartStopClick}>
       <img src={images.thumbnail} alt='' id={'image-' + id} />
-      <Overlay></Overlay>
-      <PictureTitle>
-        <Title>{name}</Title>
-        <Author>{artist.name}</Author>
+      <Overlay id='overlay'></Overlay>
+      <PictureTitle id='picture-title'>
+        <Title id='title'>{name}</Title>
+        <Author id='author'>{artist.name}</Author>
       </PictureTitle>
     </PictureItem>
   );

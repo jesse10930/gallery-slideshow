@@ -45,13 +45,16 @@ const phoneColStyle = {
 };
 
 const Pictures: React.FC<PicturesProps> = (props) => {
-  const picturesData = props.picturesData;
+  // Destructure props
+  const { picturesData, onStartStopClick } = props;
+
+  // Declare window width on render
   const windowWidth = window.innerWidth;
-  const onStartStopClick = props.onStartStopClick;
 
   return (
     <PicturesContainer
       id='pictures-container'
+      // Set width based on viewport width for mobile
       style={
         windowWidth > 800
           ? cpuColStyle

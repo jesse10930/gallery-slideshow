@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-@import 'styles/config.css';
 @import 'styles/utilities.css';
 
 * {
@@ -7,6 +6,7 @@
   margin: 0;
 }
 
+/* Set width and margin */
 html,
 body {
   font-family: 'Libre Baskerville', serif;
@@ -18,16 +18,8 @@ html {
   overflow-y: scroll;
 }
 
+/* Width and margin for tablets */
 @media (max-width: 800px) {
-  html,
-  body {
-    font-family: 'Libre Baskerville', serif;
-    width: 95vw;
-    margin: auto;
-  }
-}
-
-@media (max-width: 500px) {
   html,
   body {
     font-family: 'Libre Baskerville', serif;

@@ -10,7 +10,6 @@ const DetailsContainer = styled.div`
   justify-content: space-evenly;
 
   @media (max-width: 800px) {
-    /* height: calc(100vh - 129px); */
     justify-content: space-between;
   }
 
@@ -341,23 +340,23 @@ const ProgressBar = styled.div`
 `;
 
 const Details: React.FC<PicturesProps> = (props) => {
-  const imageID = props.imageID;
-  const picturesData = props.picturesData;
-  const windowWidth = window.innerWidth;
+  // Destructure Props
+  const { imageID, picturesData } = props;
+  // Set initial state
   const [current, setCurrent] = useState<PictureType>(
     imageID ? picturesData[imageID] : picturesData[0]
   );
+  // Get window width on render
+  const windowWidth = window.innerWidth;
 
-  console.log(
-    Math.max(
-      document.documentElement.clientHeight || 0,
-      window.innerHeight || 0
-    )
-  );
-
+  // On initial render, if first or last picture is displayed, disable prev/next button
   useEffect(() => {
-    let prevBtnElem = document.getElementById('prev-btn') as HTMLButtonElement;
-    let nextBtnElem = document.getElementById('next-btn') as HTMLButtonElement;
+    const prevBtnElem = document.getElementById(
+      'prev-btn'
+    ) as HTMLButtonElement;
+    const nextBtnElem = document.getElementById(
+      'next-btn'
+    ) as HTMLButtonElement;
     if (!imageID || imageID === 0) {
       prevBtnElem!.disabled = true;
       prevBtnElem.style.cursor = 'not-allowed';
@@ -370,9 +369,10 @@ const Details: React.FC<PicturesProps> = (props) => {
     // eslint-disable-next-line
   }, []);
 
+  // On next click, check index of current image and call enableButton, disableButton, or setCurrent based on index
   const onNextClick = () => {
-    let max = picturesData.length - 1;
-    let curIndex = picturesData
+    const max = picturesData.length - 1;
+    const curIndex = picturesData
       .map((picture) => picture.name)
       .indexOf(current.name);
 
@@ -383,9 +383,10 @@ const Details: React.FC<PicturesProps> = (props) => {
       : setCurrent(picturesData[curIndex + 1]);
   };
 
+  // On prev click, check index of current image and call enableButton, disableButton, or setCurrent based on index
   const onPrevClick = () => {
-    let max = picturesData.length - 1;
-    let curIndex = picturesData
+    const max = picturesData.length - 1;
+    const curIndex = picturesData
       .map((picture) => picture.name)
       .indexOf(current.name);
 
@@ -396,28 +397,32 @@ const Details: React.FC<PicturesProps> = (props) => {
       : setCurrent(picturesData[curIndex - 1]);
   };
 
+  // Function takes index of current image, id of prev/next button element, and +1/-1. The input button is disabled and the setCurrent is called with the new index.
   const disableButton = (curIndex: number, input: string, change: number) => {
-    let buttonElem = document.getElementById(input) as HTMLButtonElement;
+    const buttonElem = document.getElementById(input) as HTMLButtonElement;
     buttonElem!.disabled = true;
     buttonElem!.style.cursor = 'not-allowed';
     setCurrent(picturesData[curIndex + change]);
   };
 
+  // Function takes index of current image, id of prev/next button element, and +1/-1. The input button is enabled and the setCurrent is called with the new index.
   const enableButton = (curIndex: number, input: string, change: number) => {
-    let buttonElem = document.getElementById(input) as HTMLButtonElement;
+    const buttonElem = document.getElementById(input) as HTMLButtonElement;
     buttonElem!.disabled = false;
     buttonElem!.style.cursor = 'pointer';
     setCurrent(picturesData[curIndex + change]);
   };
 
+  // Display image modal on click
   const onViewImageClick = () => {
-    let divElement = document.getElementById('view-image-modal');
-    divElement ? (divElement.style.display = 'flex') : console.log('nah');
+    const divElement = document.getElementById('view-image-modal');
+    divElement ? (divElement.style.display = 'flex') : console.log('err');
   };
 
+  // Close image modal on click
   const onCloseClick = () => {
-    let divElement = document.getElementById('view-image-modal');
-    divElement ? (divElement.style.display = 'none') : console.log('nah');
+    const divElement = document.getElementById('view-image-modal');
+    divElement ? (divElement.style.display = 'none') : console.log('err');
   };
 
   return (
@@ -465,6 +470,7 @@ const Details: React.FC<PicturesProps> = (props) => {
             <img
               src={require('../assets/shared/icon-back-button.svg').default}
               alt='icon-back-button'
+              // When disabled, fade the arrow
               style={{ opacity: current.id === 0 ? 0.5 : 1 }}
             />
           </ArrowBtn>
@@ -473,6 +479,7 @@ const Details: React.FC<PicturesProps> = (props) => {
             <img
               src={require('../assets/shared/icon-next-button.svg').default}
               alt='icon-next-button'
+              // When disabled, fade the arrow
               style={{
                 opacity: current.id === picturesData.length - 1 ? 0.5 : 1,
               }}
@@ -481,6 +488,7 @@ const Details: React.FC<PicturesProps> = (props) => {
         </FooterRight>
         <ProgressBar
           id='progress-bar'
+          // Set width of progress bar based on viewport width for mobile devices
           style={{
             width:
               windowWidth > 800
@@ -498,11 +506,6 @@ const Details: React.FC<PicturesProps> = (props) => {
           </ViewImageClose>
           <ViewImageImage
             id='view-image-image'
-            // src={
-            //   window.innerWidth <= 800
-            //     ? current.images.hero.small
-            //     : current.images.hero.large
-            // }
             src={current.images.hero.small}
           ></ViewImageImage>
         </ViewImageDiv>

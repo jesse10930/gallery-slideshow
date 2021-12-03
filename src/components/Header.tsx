@@ -28,16 +28,18 @@ const HeaderRight = styled.button`
 `;
 
 const Header: React.FC<HeaderProps> = (props) => {
-  const slideShow = props.slideShow;
-  const onStartStopClick = props.onStartStopClick;
+  // Destructure props
+  const { slideShow, onStartStopClick } = props;
 
   return (
     <StyledHeader id='header'>
       <img src={GalleriaLogo} alt='Galleria Logo' />
       <HeaderRight id='header-right' onClick={onStartStopClick}>
+        {/* If slideShow true, display 'STOP' */}
         {slideShow ? (
           <span id='end-slideshow'>STOP SLIDESHOW</span>
         ) : (
+          // If slideShow false, display 'START'
           <span id='start-slideshow'>START SLIDESHOW</span>
         )}
       </HeaderRight>
