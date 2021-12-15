@@ -73,7 +73,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className='App'>
+    <div data-testid='App' className='App'>
       <Header slideShow={slideShow} onStartStopClick={onStartStopClick} />
       {/* If slideShow false, show pictures component*/}
       {!slideShow ? (

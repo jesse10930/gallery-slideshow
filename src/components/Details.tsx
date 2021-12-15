@@ -426,7 +426,7 @@ const Details: React.FC<PicturesProps> = (props) => {
   };
 
   return (
-    <DetailsContainer id='details-container'>
+    <DetailsContainer data-testid='Details' id='details-container'>
       <Detail id='detail'>
         <DetailImage
           id='detail-image'

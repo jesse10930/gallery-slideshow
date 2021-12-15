@@ -32,9 +32,13 @@ const Header: React.FC<HeaderProps> = (props) => {
   const { slideShow, onStartStopClick } = props;
 
   return (
-    <StyledHeader id='header'>
+    <StyledHeader data-testid='Header' id='header'>
       <img src={GalleriaLogo} alt='Galleria Logo' />
-      <HeaderRight id='header-right' onClick={onStartStopClick}>
+      <HeaderRight
+        data-testid='startstop'
+        id='header-right'
+        onClick={onStartStopClick}
+      >
         {/* If slideShow true, display 'STOP' */}
         {slideShow ? (
           <span id='end-slideshow'>STOP SLIDESHOW</span>

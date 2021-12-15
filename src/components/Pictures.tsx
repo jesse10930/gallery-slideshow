@@ -53,6 +53,7 @@ const Pictures: React.FC<PicturesProps> = (props) => {
 
   return (
     <PicturesContainer
+      data-testid='Pictures'
       id='pictures-container'
       // Set width based on viewport width for mobile
       style={
